@@ -13,9 +13,14 @@ const startServer = async () => {
     // Initialize background cron jobs
     initViewCountSyncJob()
 
-    app.listen(PORT, () => {
-      console.log(` Server is running on http://localhost:${PORT}`)
+    const server = app.listen(PORT, () => {
+      console.log(`🚀 Server is running on http://localhost:${PORT}`)
     })
+
+    // HTTP Server Timeouts to defend against Slowloris / slow body drip attacks
+    server.headersTimeout = 20 * 1000 // 20 seconds
+    server.requestTimeout = 30 * 1000 // 30 seconds
+    server.keepAliveTimeout = 5 * 1000 // 5 seconds
   } catch (error) {
     console.error("❌ Failed to connect to the database:", error)
     process.exit(1)

@@ -8,7 +8,19 @@ export const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  const statusCode = err instanceof AppError ? err.statusCode : 500
+  // Handle body-parser payload limit exceeded (413 Payload Too Large)
+  if ((err as any).type === "entity.too.large" || (err as any).status === 413) {
+    return res.status(413).json({
+      success: false,
+      error: "Dung lượng dữ liệu gửi lên quá lớn (tối đa 10KB).",
+    })
+  }
+
+  const statusCode =
+    err instanceof AppError
+      ? err.statusCode
+      : (err as any).status || (err as any).statusCode || 500
+
   const message = err.message || "Internal Server Error"
   const details = err instanceof AppError ? err.details : undefined
 

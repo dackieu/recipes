@@ -138,7 +138,7 @@ api/
 
 ---
 
-### 2.3 HTTP Security Hardening
+### 2.3 HTTP Security Hardening ✅ *(Completed)*
 - **Problem**: Missing HTTP security headers, unrestricted payload sizes, and open endpoints expose the API to XSS, clickjacking, and DoS.
 - **Files to Modify/Create**:
   - [app.ts](file:///Users/kiennt2/recipes/api/src/app.ts)
@@ -308,7 +308,7 @@ Use this checklist to track your learning and implementation progress:
 - [x] Implement Refresh Token Rotation + httpOnly cookie session management
 - [x] Implement Token Reuse Detection (automatic session purge on breach)
 - [x] Add Google OAuth 2.0 social login flow *(Already Done)*
-- [ ] Configure `helmet` and strict CORS / payload size controls
+- [x] Configure `helmet` and strict CORS / payload size controls
 
 ### Phase 3: Caching & Distributed Queues
 - [ ] Implement Redis Cache-Aside pattern for categories and popular recipes
