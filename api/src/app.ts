@@ -36,6 +36,8 @@ const ALLOWED_ORIGINS = new Set([
   "http://localhost:8888",
   "http://localhost:3000",
   "https://recipes-five-opal.vercel.app",
+  "https://bepphuong.online",
+  "https://www.bepphuong.online",
   ...(process.env.ALLOWED_ORIGINS
     ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
     : []),
