@@ -93,15 +93,6 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: "10kb" }))
 app.use(cookieParser())
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Recipes API is running on Vercel",
-    status: "ok",
-    docs: "/docs",
-    health: "/wake-up",
-  })
-})
-
 app.get("/wake-up", (req, res) => {
   res.json({
     message: "I'm alive",
