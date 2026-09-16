@@ -39,7 +39,9 @@ const ALLOWED_ORIGINS = new Set([
   "https://bepphuong.online",
   "https://www.bepphuong.online",
   ...(process.env.ALLOWED_ORIGINS
-    ? process.env.ALLOWED_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
+    ? process.env.ALLOWED_ORIGINS.split(",")
+        .map((o) => o.trim())
+        .filter(Boolean)
     : []),
   ...(process.env.ACCESS_CONTROL_ALLOW_ORIGIN
     ? [process.env.ACCESS_CONTROL_ALLOW_ORIGIN.trim()]
@@ -91,8 +93,20 @@ app.use(
 app.use(express.urlencoded({ extended: true, limit: "10kb" }))
 app.use(cookieParser())
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "Recipes API is running on Vercel",
+    status: "ok",
+    docs: "/docs",
+    health: "/wake-up",
+  })
+})
+
 app.get("/wake-up", (req, res) => {
-  res.json({ message: "I'm alive" })
+  res.json({
+    message: "I'm alive",
+    commit: process.env.RENDER_GIT_COMMIT || process.env.VERCEL_GIT_COMMIT_SHA || "local",
+  })
 })
 
 // Main API routes
