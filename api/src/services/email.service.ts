@@ -47,12 +47,9 @@ export const sendMailDirect = async (payload: EmailJobPayload) => {
 export const sendMail = async (
   email: string,
   subject: string,
-  html: string,
-  options?: EmailSendOptions
+  html: string
 ): Promise<EnqueueEmailResult> => {
   const from = DEFAULT_FROM
-  const retries = options?.retries !== undefined ? options.retries : QSTASH_CONFIG.defaultRetries
-  const delay = options?.delay !== undefined ? options.delay : QSTASH_CONFIG.defaultDelay
 
   // If QStash client is available, enqueue to QStash queue
   if (qstashClient) {
@@ -68,8 +65,6 @@ export const sendMail = async (
           html,
           from,
         },
-        retries,
-        delay: delay ? (delay as any) : undefined,
       })
 
       console.log(

@@ -71,7 +71,7 @@ const createUser = async (user: UserPayload) => {
   const emailHtml = generateVerificationEmailHtml(verificationUrl)
 
   try {
-    await sendMail(user.email, "Kích Hoạt Tài Khoản — Bếp Phương", emailHtml, { delay: "60s" })
+    await sendMail(user.email, "Kích Hoạt Tài Khoản — Bếp Phương", emailHtml)
   } catch (error) {
     console.error("⚠️ Failed to send verification email during registration:", error)
   }
@@ -221,7 +221,7 @@ const forgotPassword = async (email?: string) => {
   const hashedOtp = crypto.createHash("sha256").update(rawOtp).digest("hex")
   // send mail
   const emailHtml = generateOtpEmailHtml(rawOtp)
-  await sendMail(email, "Mã Xác Thực Đặt Lại Mật Khẩu — Bếp Phương", emailHtml, { delay: "60s" })
+  await sendMail(email, "Mã Xác Thực Đặt Lại Mật Khẩu — Bếp Phương", emailHtml)
   // save to database (otp, expired = 10p, reset_otp_attempts = 0 )
   await userRepository.saveOtp(email, hashedOtp, new Date(Date.now() + 10 * 60 * 1000))
 }
