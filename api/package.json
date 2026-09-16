@@ -17,6 +17,7 @@
   "description": "",
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^9.1.0",
+    "@upstash/qstash": "^2.11.3",
     "@upstash/redis": "^1.38.2",
     "bcrypt": "^6.0.0",
     "cloudinary": "^2.10.0",

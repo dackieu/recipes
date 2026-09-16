@@ -71,7 +71,7 @@ const createUser = async (user: UserPayload) => {
   const emailHtml = generateVerificationEmailHtml(verificationUrl)
 
   try {
-    await sendMail(user.email, "Kích Hoạt Tài Khoản — Bếp Phương", emailHtml)
+    await sendMail(user.email, "Kích Hoạt Tài Khoản — Bếp Phương", emailHtml, { delay: "60s" })
   } catch (error) {
     console.error("⚠️ Failed to send verification email during registration:", error)
   }
@@ -439,7 +439,8 @@ const facebookLogin = async (
     if (!response.ok || result.error || !result.id) {
       console.error("⚠️ Facebook Graph API verification failed:", result.error || result)
       throw new AppError(
-        result.error?.message || "Xác thực tài khoản Facebook thất bại hoặc phiên đăng nhập đã hết hạn.",
+        result.error?.message ||
+          "Xác thực tài khoản Facebook thất bại hoặc phiên đăng nhập đã hết hạn.",
         401
       )
     }
@@ -514,4 +515,3 @@ export const userService = {
   refreshSession,
   logoutUser,
 }
-

@@ -58,7 +58,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Refresh-Token, X-Cron-Secret"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Refresh-Token, X-Cron-Secret, Upstash-Signature"
   )
   res.setHeader("Access-Control-Max-Age", "86400") // 24h preflight cache
 
@@ -80,7 +80,14 @@ const apiLimiter = rateLimit({
 app.use(apiLimiter)
 
 // 3. Strict Payload Size Limits (Defends against JSON / URL-encoded body flood DoS)
-app.use(express.json({ limit: "10kb" }))
+app.use(
+  express.json({
+    limit: "10kb",
+    verify: (req: any, _res, buf) => {
+      req.rawBody = buf.toString("utf-8")
+    },
+  })
+)
 app.use(express.urlencoded({ extended: true, limit: "10kb" }))
 app.use(cookieParser())
 
