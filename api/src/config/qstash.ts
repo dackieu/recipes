@@ -1,10 +1,13 @@
 import { Client, Receiver } from "@upstash/qstash"
 
+const qstashBaseUrl = process.env.QSTASH_URL
 const qstashToken = process.env.QSTASH_TOKEN
 const currentSigningKey = process.env.QSTASH_CURRENT_SIGNING_KEY
 const nextSigningKey = process.env.QSTASH_NEXT_SIGNING_KEY
 
-export const qstashClient = qstashToken ? new Client({ token: qstashToken }) : null
+export const qstashClient = qstashToken
+  ? new Client({ token: qstashToken, baseUrl: qstashBaseUrl })
+  : null
 
 export const qstashReceiver =
   currentSigningKey && nextSigningKey
