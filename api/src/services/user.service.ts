@@ -221,7 +221,7 @@ const forgotPassword = async (email?: string) => {
   const hashedOtp = crypto.createHash("sha256").update(rawOtp).digest("hex")
   // send mail
   const emailHtml = generateOtpEmailHtml(rawOtp)
-  await sendMail(email, "Mã Xác Thực Đặt Lại Mật Khẩu — Bếp Phương", emailHtml)
+  await sendMail(email, "Mã Xác Thực Đặt Lại Mật Khẩu — Bếp Phương", emailHtml, { delay: "60s" })
   // save to database (otp, expired = 10p, reset_otp_attempts = 0 )
   await userRepository.saveOtp(email, hashedOtp, new Date(Date.now() + 10 * 60 * 1000))
 }

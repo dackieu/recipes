@@ -1,11 +1,7 @@
 import resend from "../config/email"
 import { qstashClient, QSTASH_CONFIG } from "../config/qstash"
 import { AppError } from "../utils/AppError"
-import {
-  EmailJobPayload,
-  EmailSendOptions,
-  EnqueueEmailResult,
-} from "../types/email.type"
+import { EmailJobPayload, EmailSendOptions, EnqueueEmailResult } from "../types/email.type"
 
 const DEFAULT_FROM = `"Bếp Phương" <noreply@bepphuong.online>`
 
@@ -37,15 +33,9 @@ export const sendMailDirect = async (payload: EmailJobPayload) => {
     )
     return data
   } catch (error: any) {
-    console.error(
-      `[${new Date().toISOString()}] [EMAIL] ❌ Error sending email to ${to}:`,
-      error
-    )
+    console.error(`[${new Date().toISOString()}] [EMAIL] ❌ Error sending email to ${to}:`, error)
     if (error instanceof AppError) throw error
-    throw new AppError(
-      `Error sending email: ${error.message || "Failed to send"}`,
-      500
-    )
+    throw new AppError(`Error sending email: ${error.message || "Failed to send"}`, 500)
   }
 }
 
@@ -61,12 +51,8 @@ export const sendMail = async (
   options?: EmailSendOptions
 ): Promise<EnqueueEmailResult> => {
   const from = DEFAULT_FROM
-  const retries =
-    options?.retries !== undefined
-      ? options.retries
-      : QSTASH_CONFIG.defaultRetries
-  const delay =
-    options?.delay !== undefined ? options.delay : QSTASH_CONFIG.defaultDelay
+  const retries = options?.retries !== undefined ? options.retries : QSTASH_CONFIG.defaultRetries
+  const delay = options?.delay !== undefined ? options.delay : QSTASH_CONFIG.defaultDelay
 
   // If QStash client is available, enqueue to QStash queue
   if (qstashClient) {
